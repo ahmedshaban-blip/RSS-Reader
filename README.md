@@ -3,6 +3,12 @@
 
 An elegant, modern RSS feed reader application built with Flutter. This application allows users to fetch, parse, and display articles from any valid RSS feed URL. It features a clean, animated user interface and is structured following Clean Architecture principles for scalability and maintainability.
 
+## Screenshots
+
+<p align="center">
+  <img src="assets/screenshots/app_preview.png" alt="RSS Reader App Screenshots" width="100%">
+</p>
+
 ## Features
 
 - **Fetch from URL**: Enter any valid RSS feed URL to load its content.
@@ -27,9 +33,6 @@ The project is structured using principles of **Clean Architecture** to separate
   - `repositories`: Implements the `RssRepository`, which fetches and parses the RSS feed from the network.
   - `models`: Defines the data structures, such as `RssItem`.
 
-- **Tooling**: Includes Dart scripts to automate the creation of new features and scaffold the project structure, enforcing architectural consistency.
-  - `tool/generate_feature.dart`: A script to generate a new feature module with the complete directory structure for domain, data, and presentation layers.
-
 ### State Management
 
 State management is handled using **Bloc (Cubit)** pattern, which provides a predictable state lifecycle and separates business logic from the UI.
@@ -49,7 +52,7 @@ To get a local copy up and running, follow these simple steps.
 
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/ahmedshaban-blip/rss-reader.git
+    git clone [https://github.com/ahmedshaban-blip/rss-reader.git](https://github.com/ahmedshaban-blip/rss-reader.git)
     ```
 
 2.  **Navigate to the project directory:**

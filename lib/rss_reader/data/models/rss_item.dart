@@ -1,3 +1,4 @@
+// rss_reader/data/models/rss_item.dart
 class RssItem {
   final String title;
   final String link;

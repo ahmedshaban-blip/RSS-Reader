@@ -1,4 +1,4 @@
-import 'package:RSS_Reader_Pro/main.dart';
+import 'package:rss_reader_pro/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 

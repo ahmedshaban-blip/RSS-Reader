@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
@@ -10,34 +12,55 @@ class RssRepository {
   RssRepository({http.Client? client}) : _client = client ?? http.Client();
 
   Future<List<RssItem>> fetchRssItems(String url) async {
-    final response = await _client.get(Uri.parse(url));
-    if (response.statusCode != 200) {
-      throw Exception('Failed to load RSS (${response.statusCode})');
+    try {
+      final uri = Uri.tryParse(url);
+      if (uri == null || (uri.scheme != 'http' && uri.scheme != 'https')) {
+        throw const FormatException('Invalid URL');
+      }
+
+      final response = await _client
+          .get(uri)
+          .timeout(const Duration(seconds: 15));
+
+      if (response.statusCode != 200) {
+        throw HttpException('Failed to load RSS (${response.statusCode})');
+      }
+
+      final document = xml.XmlDocument.parse(response.body);
+
+      final items = document.findAllElements('item').map((element) {
+        final title =
+            element.getElement('title')?.innerText.trim() ?? 'No title';
+        final link = element.getElement('link')?.innerText.trim() ?? '';
+        final pubDate =
+            element.getElement('pubDate')?.innerText.trim() ?? '';
+        final rawDescription =
+            element.getElement('description')?.innerText.trim() ?? '';
+
+        final imageUrl = _extractImageUrl(element, rawDescription);
+        final description = _stripHtml(rawDescription);
+
+        return RssItem(
+          title: title,
+          link: link,
+          description: description,
+          pubDate: pubDate,
+          imageUrl: imageUrl,
+        );
+      }).toList();
+
+      return items;
+    } on FormatException catch (e) {
+      throw Exception(e.message);
+    } on TimeoutException {
+      throw Exception('Request timed out');
+    } on SocketException {
+      throw Exception('No internet connection');
+    } on HttpException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception('Unexpected error: $e');
     }
-
-    final document = xml.XmlDocument.parse(response.body);
-
-    final items = document.findAllElements('item').map((element) {
-      final title = element.getElement('title')?.innerText.trim() ?? 'No title';
-      final link = element.getElement('link')?.innerText.trim() ?? '';
-      final pubDate = element.getElement('pubDate')?.innerText.trim() ?? '';
-      final rawDescription =
-          element.getElement('description')?.innerText.trim() ?? '';
-
-      final imageUrl = _extractImageUrl(element, rawDescription);
-
-      final description = _stripHtml(rawDescription);
-
-      return RssItem(
-        title: title,
-        link: link,
-        description: description,
-        pubDate: pubDate,
-        imageUrl: imageUrl,
-      );
-    }).toList();
-
-    return items;
   }
 
   static String _stripHtml(String htmlText) {

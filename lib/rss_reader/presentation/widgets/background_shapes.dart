@@ -1,3 +1,4 @@
+// rss_reader/presentation/widgets/background_shapes.dart
 import 'package:flutter/material.dart';
 
 class BackgroundShapes extends StatelessWidget {

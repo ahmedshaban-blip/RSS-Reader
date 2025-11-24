@@ -1,3 +1,4 @@
+// rss_reader/presentation/pages/rss_detail_page.dart
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,13 +11,25 @@ class RssDetailPage extends StatelessWidget {
 
   const RssDetailPage({super.key, required this.item, required this.color});
 
-  Future<void> _openInBrowser(BuildContext context) async {
-    if (item.link.isEmpty) return;
-    final uri = Uri.tryParse(item.link);
-    if (uri != null) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
+ Future<void> _openInBrowser(BuildContext context) async {
+  if (item.link.isEmpty) return;
+
+  final uri = Uri.tryParse(item.link);
+  if (uri == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Invalid article link')),
+    );
+    return;
   }
+
+  final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+  if (!ok) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Could not open in browser')),
+    );
+  }
+}
+
 
   void _shareArticle(BuildContext context) {
     if (item.link.isNotEmpty) {

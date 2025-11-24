@@ -1,3 +1,4 @@
+// rss_reader/presentation/pages/rss_input_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,24 +18,34 @@ class _RssInputPageState extends State<RssInputPage> {
   final TextEditingController _controller = TextEditingController();
   String? _errorText;
 
-  void _onSave() {
-    final url = _controller.text.trim();
-    if (url.isEmpty) {
-      setState(() {
-        _errorText = 'Required!';
-      });
-      return;
-    }
-
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => BlocProvider(
-          create: (_) => RssCubit(RssRepository())..loadFeed(url),
-          child: RssListPage(feedUrl: url),
-        ),
-      ),
-    );
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
+
+ void _onSave() {
+  final url = _controller.text.trim();
+  if (url.isEmpty) {
+    setState(() {
+      _errorText = 'Required!';
+    });
+    return;
+  }
+
+  setState(() {
+    _errorText = null;
+  });
+
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (_) => BlocProvider(
+        create: (_) => RssCubit(RssRepository())..loadFeed(url),
+        child: RssListPage(feedUrl: url),
+      ),
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {

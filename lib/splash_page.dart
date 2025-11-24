@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:RSS_Reader_Pro/rss_reader/presentation/pages/rss_input_page.dart';
+import 'package:rss_reader_pro/rss_reader/presentation/pages/rss_input_page.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatefulWidget {

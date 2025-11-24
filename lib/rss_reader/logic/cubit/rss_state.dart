@@ -1,4 +1,4 @@
-
+// rss_reader/logic/cubit/rss_state.dart
 import 'package:equatable/equatable.dart';
 import '../../data/models/rss_item.dart';
 

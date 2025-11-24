@@ -1,5 +1,6 @@
-import 'package:RSS_Reader_Pro/splash_page.dart';
+// main.dart
 import 'package:flutter/material.dart';
+import 'package:rss_reader_pro/splash_page.dart';
 
 void main() {
   runApp(const MyApp());

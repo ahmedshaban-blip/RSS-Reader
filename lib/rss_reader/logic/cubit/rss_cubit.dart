@@ -1,4 +1,4 @@
-
+// rss_reader/logic/cubit/rss_cubit.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'rss_state.dart';
@@ -33,6 +33,10 @@ class RssCubit extends Cubit<RssState> {
     } catch (e) {
       emit(RssError(e.toString()));
     }
+  }
+
+  Future<void> refresh(String url) async {
+    await loadFeed(url);
   }
 
   void loadMore() {

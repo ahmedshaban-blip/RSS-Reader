@@ -1,3 +1,4 @@
+// rss_reader/presentation/widgets/wave_clipper.dart
 import 'package:flutter/material.dart';
 
 class WaveClipper extends CustomClipper<Path> {

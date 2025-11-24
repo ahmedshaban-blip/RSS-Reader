@@ -6,7 +6,7 @@ An elegant, modern RSS feed reader application built with Flutter. This applicat
 ## Screenshots
 
 <p align="center">
-  <img src="assets/screenshots/app_preview.png" alt="RSS Reader App Screenshots" width="100%">
+  <img src="https://raw.githubusercontent.com/ahmedshaban-blip/RSS-Reader/refs/heads/main/lib/assets/screenShot.png" alt="RSS Reader App Screenshots" width="100%">
 </p>
 
 ## Features
